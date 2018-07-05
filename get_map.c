@@ -32,6 +32,10 @@ char	*get_map(f_list **node, char *line)
 		i++;
 	}
 	set_calc(node);
+	int **heatmap;
+
+	heatmap = hmap(*node);
+	printhmap(heatmap, *node);
 //	fprintf(stderr, "line returned from  map == %s\n", line);
 	return (line);
 }

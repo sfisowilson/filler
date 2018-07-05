@@ -38,4 +38,6 @@ void			reply(f_list **node);
 void			reply_end(void);
 void			freeit(f_list **node);
 void			trimming(f_list **node);
+int				**hmap(f_list *node);
+void			printhmap(int **map, f_list *node);
 #endif

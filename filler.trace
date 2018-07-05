@@ -1,1 +1,6 @@
 seed = 0
+X: error on input
+./sfiso.filler: Segfault at 0
+./sfiso.filler won
+Score:
+1AGAINST0

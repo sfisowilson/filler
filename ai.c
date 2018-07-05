@@ -105,6 +105,10 @@ int		aiur(f_list **node)
 
 int	ai(f_list **node)
 {
+	int **heatmap;
+
+	heatmap = hmap(*node);
+	printhmap(heatmap, *node);
 	if ((*node)->calc == 0)
 	{
 		fprintf(stderr, "down right\n");
