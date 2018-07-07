@@ -30,22 +30,26 @@ void	downandup(int n, int y, int x, f_list *node, int **hmap)
 	int j;
 
 	i = n;
-	j = 0;
-	while ((--i > 0) && (++j < 8))
+	j = -1;
+	while ((--i > 0) && (++j < 24))
 		if (((y - j) >= 0) && (node->map[y - j][x] == '.'))
 		{
-			if (hmap[y - j][x] != 0)
-				hmap[y - j][x] = i + hmap[y - j][x];
-			hmap[y - j][x] = i;
+			if (hmap[y - j][x] < i)
+				hmap[y - j][x] = i;
+			if (node->map[y - j][x] == node->opp)
+				break ;
+			//hmap[y - j][x] = i;
 		}
 	i = n;
-	j = 0;
-	while ((--i > 0) && (++j < 8))
+	j = -1;
+	while ((--i > 0) && (++j < 24))
 		if (((y + j) < node->map_y) && (node->map[y + j][x] == '.'))
 		{
-			if (hmap[y + j][x] != 0)
-				hmap[y - j][x] = i + hmap[y - j][x];
-			hmap[y + j][x] = i;
+			if (hmap[y + j][x] < i)
+				hmap[y + j][x] = i;
+			if (node->map[y + j][x] == node->opp)
+				break ;
+			//hmap[y + j][x] = i;
 		}
 }
 
@@ -56,11 +60,12 @@ void	checkhmap(int **hmap, int y, int x, f_list *node)
 	int flag;
 
 	i = 0;
-	j = 8;
+	j = 24;
 	flag = 1;
 	while (flag)
 	{
 		downandup(j, y, x - i, node, hmap);
+		downandup(j, y, x + i, node, hmap);
 		j--;
 		i++;
 		if (flag == 1)
@@ -69,7 +74,7 @@ void	checkhmap(int **hmap, int y, int x, f_list *node)
 			{
 				flag = 2;
 				i = 0;
-				j = 7;
+				j = 23;
 			}
 		}
 		else if (flag == 2)

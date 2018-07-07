@@ -1,6 +1,5 @@
-seed = 0
-X: error on input
-./sfiso.filler: Segfault at 0
+seed = 5403
+O: timedout
 ./sfiso.filler won
 Score:
-1AGAINST0
+82AGAINST1920

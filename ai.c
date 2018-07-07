@@ -1,31 +1,39 @@
 #include "filler.h"
 
-int		aidr(f_list **node)
+int		aidr(f_list **node, int *c)
 {
 	int y;
 	int x;
+	static int flag;
 
+	flag = 0;
 	y = 0;
 	while ((*node)->map_y > y)
 	{
 		x = 0;
 		while ((*node)->map_x > x)
 		{
-			if (try_token(node, y, x))
+			if (try_token(node, y, x) && (*c <= (*node)->heatmap[y][x]))
 			{
+				*c = (*node)->heatmap[y][x];
 				(*node)->play_y = y - (*node)->st_y;
 				(*node)->play_x = x - (*node)->st_x;
-				if (ft_strchr((*node)->map[y], '*'))
-					return (1);
+				flag = 1;
 			}
 			x++;
 		}
 		y++;
 	}
-	return (1);
+	if (flag)
+		return (1);
+	else
+	{
+		*c = 0;
+		return (0);
+	}
 }
 
-int		aidl(f_list **node)
+int		aidl(f_list **node, int *c)
 {
 	int y;
 	int x;
@@ -36,12 +44,11 @@ int		aidl(f_list **node)
 		x = (*node)->map_x;
 		while (x)
 		{
-			if (try_token(node, y, x))
+			if (try_token(node, y, x) && (*c <= (*node)->heatmap[y][x]))
 			{
+				*c = (*node)->heatmap[y][x];
 				(*node)->play_y = y - (*node)->st_y;
 				(*node)->play_x = x - (*node)->st_x;
-				if (ft_strchr((*node)->map[y], '*'))
-					return (1);
 			}
 			x--;
 		}
@@ -50,7 +57,7 @@ int		aidl(f_list **node)
 	return (1);
 }
 
-int		aiul(f_list **node)
+int		aiul(f_list **node, int *c)
 {
 	int y;
 	int x;
@@ -61,12 +68,11 @@ int		aiul(f_list **node)
 		x = (*node)->map_x;
 		while (x)
 		{
-			if (try_token(node, y, x))
+			if (try_token(node, y, x) && (*c <= (*node)->heatmap[y][x]))
 			{
+				*c = (*node)->heatmap[y][x];
 				(*node)->play_y = y - (*node)->st_y;
 				(*node)->play_x = x - (*node)->st_x;
-				if (ft_strchr((*node)->map[y], '*'))
-					return (1);
 			}
 			x--;
 		}
@@ -75,7 +81,7 @@ int		aiul(f_list **node)
 	return (1);
 }
 
-int		aiur(f_list **node)
+int		aiur(f_list **node, int *c)
 {
 	int y;
 	int x;
@@ -86,15 +92,11 @@ int		aiur(f_list **node)
 		x = 0;
 		while (x < (*node)->map_x)
 		{
-			if (try_token(node, y, x))
+			if (try_token(node, y, x) && (*c <= (*node)->heatmap[y][x]))
 			{
+				*c = (*node)->heatmap[y][x];
 				(*node)->play_y = y - (*node)->st_y;
 				(*node)->play_x = x - (*node)->st_x;
-				if (ft_strchr((*node)->map[y], '*'))
-				{
-					fprintf(stderr, "close __ y = %d, x = %d\n", y, x);
-					return (1);
-				}
 			}
 			x++;
 		}
@@ -105,29 +107,27 @@ int		aiur(f_list **node)
 
 int	ai(f_list **node)
 {
-	int **heatmap;
+	int c;
 
-	heatmap = hmap(*node);
-	printhmap(heatmap, *node);
+	c = 0;
+	(*node)->heatmap = hmap(*node);
 	if ((*node)->calc == 0)
 	{
-		fprintf(stderr, "down right\n");
-		(aidr(node));
+		if (aidr(node, &c));
+		else 
+			aidl(node, &c);
 	}
 	else if ((*node)->calc == 1)
 	{
-		fprintf(stderr, "up left\n");
-		(aiul(node));
+		(aiul(node, &c));
 	}
 	else if ((*node)->calc == 2)
 	{
-		fprintf(stderr, "up right\n");
-		(aiur(node));
+		(aiur(node, &c));
 	}
 	else if((*node)->calc == 3)
 	{
-		fprintf(stderr, "down left\n");
-		(aidl(node));
+		(aidl(node, &c));
 	}
 	return (1);
 }

@@ -24,6 +24,7 @@ typedef struct	f_list
 	int			t_x;
 	int			st_y;
 	int			st_x;
+	int			**heatmap;
 }				f_list;
 
 int				get_players(f_list **node, char *line);
