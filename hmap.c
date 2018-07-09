@@ -31,23 +31,23 @@ void	downandup(int n, int y, int x, f_list *node, int **hmap)
 
 	i = n;
 	j = -1;
-	while ((--i > 0) && (++j < 24))
-		if (((y - j) >= 0) && (node->map[y - j][x] == '.'))
+	while ((--i > 0) && (++j < 14))
+		if (((y - j) >= 0) && (node->noppm[y - j][x] == '.'))
 		{
 			if (hmap[y - j][x] < i)
 				hmap[y - j][x] = i;
-			if (node->map[y - j][x] == node->opp)
+			if (node->map[y - j][x] == node->user)
 				break ;
 			//hmap[y - j][x] = i;
 		}
 	i = n;
 	j = -1;
-	while ((--i > 0) && (++j < 24))
-		if (((y + j) < node->map_y) && (node->map[y + j][x] == '.'))
+	while ((--i > 0) && (++j < 14))
+		if (((y + j) < node->map_y) && (node->noppm[y + j][x] == '.'))
 		{
 			if (hmap[y + j][x] < i)
 				hmap[y + j][x] = i;
-			if (node->map[y + j][x] == node->opp)
+			if (node->map[y + j][x] == node->user)
 				break ;
 			//hmap[y + j][x] = i;
 		}
@@ -60,7 +60,7 @@ void	checkhmap(int **hmap, int y, int x, f_list *node)
 	int flag;
 
 	i = 0;
-	j = 24;
+	j = 14;
 	flag = 1;
 	while (flag)
 	{
@@ -74,7 +74,7 @@ void	checkhmap(int **hmap, int y, int x, f_list *node)
 			{
 				flag = 2;
 				i = 0;
-				j = 23;
+				j = 13;
 			}
 		}
 		else if (flag == 2)
@@ -99,6 +99,21 @@ void	printhmap(int **map, f_list *node)
 	}
 }
 
+void	printomap(f_list *node, char **map)
+{
+	int y;
+	int x;
+
+	y = -1;
+	while (++y < node->map_y)
+	{
+		x = -1;
+		while (++x < node->map_x)
+			fprintf(stderr, "%c", map[y][x]);
+		fprintf(stderr, "\n");
+	}
+}
+
 int	**hmap(f_list *node)
 {
 	int my;
@@ -111,7 +126,7 @@ int	**hmap(f_list *node)
 	my = node->map_y;
 	//create and initialize the map
 	heatmap = makehmap(my, mx);
-	//printhmap(heatmap, node);
+	//printomap(node, node->oppm);
 	y = 0;
 	while (y < my)
 	{
@@ -120,7 +135,7 @@ int	**hmap(f_list *node)
 		{
 			//fprintf(stderr, "loop y = %d, x = %d\n", y, x);
 			//fprintf(stderr, "map = %c opp = %c\n",node->map[y][x], node->opp);
-			if (node->map[y][x] == node->opp)
+			if (node->noppm[y][x] == node->opp)
 			{
 			//fprintf(stderr, "loop y = %d, x = %d\n", y, x);
 				checkhmap(heatmap, y, x, node);

@@ -7,6 +7,8 @@ typedef struct	f_list
 {
 	char		**map;
 	char		**token;
+	char		**oppm;
+	char		**noppm;
 	char		user;
 	char		opp;
 	int			map_y;
@@ -39,6 +41,9 @@ void			reply(f_list **node);
 void			reply_end(void);
 void			freeit(f_list **node);
 void			trimming(f_list **node);
+void			findoppco(f_list **node);
+void			oppmap(f_list **node);
 int				**hmap(f_list *node);
-void			printhmap(int **map, f_list *node);
+//void			printhmap(int **map, f_list *node);
+void			printomap(f_list *node, char **map);
 #endif

@@ -9,6 +9,7 @@ int	main(void)
 
 	node = (f_list*)malloc(sizeof(f_list));
 	get_next_line(0, &line);
+	node->oppm = NULL;
 	if (get_players(&node, line))
 		node->opp = (node->user == 'O')? 'X' : 'O';
 	while (1)

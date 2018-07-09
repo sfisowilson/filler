@@ -1,5 +1,5 @@
-seed = 5403
-O: timedout
+seed = 4706
+/sfiso.filler: Segfault at 155
 ./sfiso.filler won
 Score:
-82AGAINST1920
+26AGAINST155

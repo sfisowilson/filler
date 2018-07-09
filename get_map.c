@@ -1,11 +1,30 @@
 #include "filler.h"
 #include <stdlib.h>
+//#include <stdio.h>
 
 void	set_calc(f_list **node);
+/*
+void	resetheatmap(f_list **node)
+{
+	if ((*node)->heatmap)
+	{
+//		fprintf(stderr, "what is this all about??????\n");
+		int y;
+		int x;
 
+		y = -1;
+		while (++y < (*node)->map_y)
+		{
+			x = -1;
+			while (++x < (*node)->map_x)
+				(*node)->heatmap[y][x] = 0;
+		}
+	}
+}
+*/
 char	*get_map(f_list **node, char *line)
 {
-	int i;
+	int	i;
 	int	len;
 	int	j;
 	
@@ -32,10 +51,10 @@ char	*get_map(f_list **node, char *line)
 		i++;
 	}
 	set_calc(node);
-	int **heatmap;
-
-	heatmap = hmap(*node);
-	printhmap(heatmap, *node);
+//	resetheatmap(node);
+//	oppmap(node);
+//	(*node)->heatmap = hmap(*node);
+//	printhmap((*node)->heatmap, *node);
 //	fprintf(stderr, "line returned from  map == %s\n", line);
 	return (line);
 }
@@ -70,7 +89,7 @@ void	get_possition(f_list **node)
 void set_calc(f_list **node)
 {
 	get_possition(node);
-	if (((*node)->user_pos_y) > ((*node)->opp_pos_y))
+/*	if (((*node)->user_pos_y) > ((*node)->opp_pos_y))
 	{
 		if ((*node)->calc == 1)
 			(*node)->calc = 2;
@@ -88,4 +107,5 @@ void set_calc(f_list **node)
 		else
 			(*node)->calc = 0;
 	}
+	*/
 }
